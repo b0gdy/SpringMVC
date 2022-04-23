@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Song update</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css" />
+    <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row mt-3">
+        <div class="col"></div>
+        <div class="col">
+            <form th:object="${song}" th:action="@{/song/update}" method="post" enctype="multipart/form-data">
+
+                <div class="form-group mt-3">
+                    <h1 class="text-center mt-3">Song update</h1>
+                </div>
+                <input type="hidden" th:field="*{id}"/>
+                <div class="form-group mt-3">
+                    <label><b>Song name:</b></label>
+                    <input type="text" class="form-control" placeholder="Song name" th:field="*{name}" required autofocus/>
+                </div>
+                <div class="form-group mt-3">
+                    <label><b>Song genre:</b></label>
+                    <select class="form-control" th:field="*{genre}">
+                        <option th:each="genreOpt : ${T(com.example.Proiect1.domain.Genre).values()}"
+                                th:value="${genreOpt}"
+                                th:text="${genreOpt.getDescription()}"></option>
+                    </select>
+                </div>
+                <div class="form-group mt-3">
+                    <label><b>Song artist:</b></label>
+                    <select class="form-control" th:field="*{artist.id}">
+                        <option th:each="artist : ${artistsAll}"
+                                th:value="${artist.id}"
+                                th:text="${artist.name}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group mt-3 text-center">
+                    <button type="submit" class="btn btn-primary">Update song</button>
+                </div>
+
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+
+</div>
+
+</body>
+</html>

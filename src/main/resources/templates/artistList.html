@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Artists list</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css" />
+    <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row mt-3">
+        <div class="col-1"></div>
+        <div class="col">
+            <h1 class="text-center mt-3">Artists list</h1>
+            <table class="table text-center mt-3">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Info</th>
+                    <th scope="col" sec:authorize="hasRole('ADMIN')">Update</th>
+                    <th scope="col" sec:authorize="hasRole('ADMIN')">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="artist : ${artists}">
+                    <td th:text="${artist.id}"></td>
+                    <td th:text="${artist.name}"></td>
+                    <td><a href="#" th:href="@{'/artist/info/' + ${artist.id}}">Info</a></td>
+                    <td sec:authorize="hasRole('ADMIN')"><a href="#" th:href="@{'/artist/update/' + ${artist.id}}">Update</a></td>
+                    <td sec:authorize="hasRole('ADMIN')"><a href="#" th:href="@{'/artist/delete/' + ${artist.id}}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col"></div>
+        <div class="col text-center" sec:authorize="hasRole('ADMIN')">
+            <a class="btn btn-primary" role="button" th:href="@{'/artist/add'}">Add Artist</a>
+        </div>
+        <div class="col text-center">
+            <a class="btn btn-primary" role="button" th:href="@{'/listener/list'}">Listeners list</a>
+        </div>
+        <div class="col text-center">
+            <a class="btn btn-primary" role="button" th:href="@{'/song/list'}">Songs list</a>
+        </div>
+        <div class="col text-center">
+            <form th:action="@{/logout}" method="POST">
+                <input type="submit" class="btn btn-primary" value="Logout">
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col"></div>
+        <div class="col text-center">
+            Logged user: <span sec:authentication="name">user</span> Roles: <span sec:authentication="principal.authorities">[ROLE_USER]</span>
+        </div>
+        <div class="col"></div>
+    </div>
+
+</div>
+
+</body>
+</html>
